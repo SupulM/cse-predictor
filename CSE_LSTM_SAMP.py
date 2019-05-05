@@ -12,6 +12,7 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 
 training_set_scaled = scaler.fit_transform(data_training)
 
+
 X_train = []
 y_train = []
 
@@ -68,6 +69,7 @@ inputs = dataset_total[len(dataset_total) - len(data_testing) - 60:].values
 
 inputs = inputs.reshape(-1, 1)
 inputs = scaler.transform(inputs)
+
 
 X_test = []
 
