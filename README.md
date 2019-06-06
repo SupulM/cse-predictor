@@ -28,5 +28,13 @@ source venv/bin/activate
 venv\Scripts\activate
 ```
 
+Run the training using data from the `datasets` folder. The company ID is the 4-letter code.
+```bash
+python CSE_train.py COMB
+```
 
+Run the testing using saved models from the `saved` folder. The company ID is the 4-letter code.
+```bash
+python CSE_test.py COMB
+```
 

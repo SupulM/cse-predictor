@@ -34,7 +34,6 @@ dataset = pd.read_csv(train_path)
 scaler = create_scaler(train_path)
 
 from keras.models import load_model
-
 regressor = load_model(model_path)
 
 dataset_testing = pd.read_csv(test_path)

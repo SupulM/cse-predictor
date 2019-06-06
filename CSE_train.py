@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+import sys
+
 def create_scaler(csv):
     dataset = pd.read_csv(csv)
     dataset = dataset.reindex(index=dataset.index[::-1])
@@ -70,19 +72,22 @@ def train_regressor(csv, steps):
     return regressor
 
 
-train_path = 'datasets/VFIN_train.csv'
+company_id = sys.argv[1]
+
+train_path = 'datasets/' + company_id + '_train.csv'
+test_path = 'datasets/' + company_id + '_test.csv'
 no_steps = 60
 
 dataset = pd.read_csv(train_path)
 scaler = create_scaler(train_path)
 
 regressor = train_regressor(train_path, no_steps)
-regressor.save('saved/cse_VFIN.h5')
+regressor.save('saved/cse_' + company_id + '.h5')
 
 from keras.models import load_model
-regressor = load_model('saved/cse_VFIN.h5')
+regressor = load_model('saved/cse_' + company_id + '.h5')
 
-dataset_testing = pd.read_csv('datasets/VFIN_test.csv')
+dataset_testing = pd.read_csv(test_path)
 dataset_testing = dataset_testing.reindex(index=dataset_testing.index[::-1])
 
 data_testing = dataset_testing.iloc[:, 1:2].values
