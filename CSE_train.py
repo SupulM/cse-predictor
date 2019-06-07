@@ -4,6 +4,7 @@ import pandas as pd
 
 import sys
 
+
 def create_scaler(csv):
     dataset = pd.read_csv(csv)
     dataset = dataset.reindex(index=dataset.index[::-1])
@@ -82,38 +83,7 @@ dataset = pd.read_csv(train_path)
 scaler = create_scaler(train_path)
 
 regressor = train_regressor(train_path, no_steps)
-regressor.save('saved/cse_' + company_id + '.h5')
 
-from keras.models import load_model
-regressor = load_model('saved/cse_' + company_id + '.h5')
-
-dataset_testing = pd.read_csv(test_path)
-dataset_testing = dataset_testing.reindex(index=dataset_testing.index[::-1])
-
-data_testing = dataset_testing.iloc[:, 1:2].values
-
-dataset_total = pd.concat((dataset['Open (Rs.)'], dataset_testing['Open (Rs.)']), axis=0)
-inputs = dataset_total[len(dataset_total) - len(data_testing) - no_steps:].values
-
-inputs = inputs.reshape(-1, 1)
-inputs = scaler.transform(inputs)
-
-X_test = []
-
-for i in range(no_steps, no_steps + len(data_testing)):
-    X_test.append(inputs[i - no_steps:i, 0])
-X_test = np.array(X_test)
-
-X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
-
-predicted_stock_prices = regressor.predict(X_test)
-predicted_stock_prices = scaler.inverse_transform(predicted_stock_prices)
-
-plt.plot(data_testing, color='red', label='Real SAMP Stock Price')
-plt.plot(predicted_stock_prices, color='green', label='Predicted SAMP Stock Price')
-plt.title('CSE Stock Price Trend Prediction')
-plt.xlabel('time')
-plt.ylabel('stock price')
-plt.legend()
-plt.show()
-
+model_name = 'saved/cse_' + company_id + '.h5'
+regressor.save(model_name)
+print('Model trained and saved at : ' + model_name)
