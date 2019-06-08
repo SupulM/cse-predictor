@@ -10,15 +10,15 @@ Python and pip should be installed in your system.
 
 Clone the project and `cd` into it, run the following command to download required libraries. This will create the `venv` folder in the project location.
 
-```bash
-pip install -r requirements.txt
-```
-
-Activate the `venv`
-
+Installing `virtualenv` for the Virtual Python Environment
 ```bash
 pip install virtualenv
 ```
+```bash
+virtualenv venv
+```
+
+Activating the Virtual Environment
 * MacOS / Linux
 ```bash
 source venv/bin/activate
@@ -27,7 +27,10 @@ source venv/bin/activate
 ```bash
 venv\Scripts\activate
 ```
-
+Installing the required libraries for the project
+```bash
+pip install -r requirements.txt
+```
 Run the training using data from the `datasets` folder. The company ID is the 4-letter code.
 ```bash
 python CSE_train.py COMB
