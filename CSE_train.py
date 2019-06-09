@@ -5,19 +5,6 @@ import pandas as pd
 import sys
 
 
-def create_scaler(csv):
-    dataset = pd.read_csv(csv)
-    dataset = dataset.reindex(index=dataset.index[::-1])
-
-    data_training = dataset.iloc[:, 1:2].values
-
-    from sklearn.preprocessing import MinMaxScaler
-    sc = MinMaxScaler(feature_range=(0, 1))
-
-    training_set_scaled = sc.fit_transform(data_training)
-    return sc
-
-
 def train_regressor(csv, steps):
     dataset = pd.read_csv(csv)
     dataset = dataset.reindex(index=dataset.index[::-1])
@@ -80,7 +67,6 @@ test_path = 'datasets/' + company_id + '_test.csv'
 no_steps = 60
 
 dataset = pd.read_csv(train_path)
-scaler = create_scaler(train_path)
 
 regressor = train_regressor(train_path, no_steps)
 
